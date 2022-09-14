@@ -1,4 +1,5 @@
 const datasource = require('../db');
+const Skill = require('../entity/Skill');
 const Wilder = require('../entity/Wilder');
 
 module.exports = {
@@ -18,10 +19,22 @@ module.exports = {
       res.send('error while creating wilder');
     }
 
+    /*
+    datasource
+      .getRepository(Wilder)
+      .save({ name })
+      .then((created) => {
+        res.status(201).send(created);
+      })
+      .catch(() => {
+        res.send('error while creating wilder');
+      });
+      */
   },
   read: async (req, res) => {
     try {
       const wilders = await datasource.getRepository(Wilder).find();
+      // const wilders = await datasource.getRepository(Wilder).query('SELECT * FROM wilder');
 
       res.send(wilders);
     } catch (err) {
@@ -58,5 +71,24 @@ module.exports = {
     } catch (err) {
       console.error(err);
     }
+  },
+  addSkill: async (req, res) => {
+    const wilderToUpdate = await datasource
+      .getRepository(Wilder)
+      .findOneBy({ id: req.params.wilderId });
+
+    if (!wilderToUpdate) return res.status(404).send('wilder not found');
+
+    const skillToAdd = await datasource
+      .getRepository(Skill)
+      .findOneBy({ id: req.body.skillId });
+
+    if (!skillToAdd) return res.status(404).send('skill not found');
+
+    wilderToUpdate.skills = [...wilderToUpdate.skills, skillToAdd];
+
+    await datasource.getRepository(Wilder).save(wilderToUpdate);
+
+    res.send('skill added to wilder');
   },
 };
