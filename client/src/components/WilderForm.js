@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createWilder } from "../services/wilders";
+import styles from "./WilderForm.module.css";
 
 function WilderForm({ loadWildersIntoState, setWilders }) {
   const [name, setName] = useState("");

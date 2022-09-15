@@ -1,6 +1,6 @@
 import blank_profile from "../assets/blank_profile.png";
 import Skill from "./Skill";
-function Wilder({ name, skills = [] }) {
+function Wilder({ name, wilderId, skills = [] }) {
   return (
     <article className="card">
       <img src={blank_profile} alt="Jane Doe Profile" />

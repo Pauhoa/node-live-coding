@@ -44,6 +44,7 @@ function App() {
             : wilders.map((wilder) => (
                 <Wilder
                   key={wilder.id}
+                  wilderId={wilder.id}
                   name={wilder.name}
                   skills={wilder.skills}
                 />
