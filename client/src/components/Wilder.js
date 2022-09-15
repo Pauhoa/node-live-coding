@@ -1,11 +1,10 @@
 import blank_profile from "../assets/blank_profile.png";
 import Skill from "./Skill";
-function Wilder({ name, city, skills }) {
+function Wilder({ name, skills }) {
   return (
     <article className="card">
       <img src={blank_profile} alt="Jane Doe Profile" />
       <h3>{name[0].toUpperCase() + name.split("").splice(1).join("")}</h3>
-      <h4>{city}</h4>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
