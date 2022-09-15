@@ -42,6 +42,10 @@ header {
   color: #fff;
 }
 
+footer {
+  border-top: 2px solid #f76c6c;
+}
+
 /* 
  * card-layout. css 
  */

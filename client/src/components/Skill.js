@@ -1,8 +1,8 @@
-function Skill({ level, name }) {
+function Skill({ title, votes }) {
   return (
-    <li>
-      {name}
-      <span className="votes">{level}</span>
+    <li className="skill">
+      {title}
+      <span className="votes">{votes}</span>
     </li>
   );
 }
