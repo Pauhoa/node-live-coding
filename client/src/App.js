@@ -3,15 +3,17 @@ import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Wilder from "./components/Wilder";
+import WilderForm from "./components/WilderForm";
 
 import { useEffect, useState } from "react";
+
 import { getAllWilders } from "./services/wilders";
 
 function App() {
   const [wilders, setWilders] = useState([]);
   const [loadingWilders, setLoadingWilders] = useState(false);
 
-  const loadingWildersIntoState = async () => {
+  const loadWildersIntoState = async () => {
     setLoadingWilders(true);
 
     try {
@@ -24,13 +26,17 @@ function App() {
   };
 
   useEffect(() => {
-    loadingWildersIntoState();
+    loadWildersIntoState();
   }, []);
 
   return (
     <>
       <Header />
       <main className="container">
+        <WilderForm
+          loadWildersIntoState={loadWildersIntoState}
+          setWilders={setWilders}
+        />
         <h2>Wilders</h2>
         <section className="card-row">
           {loadingWilders

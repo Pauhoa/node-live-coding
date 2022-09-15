@@ -1,6 +1,6 @@
 import blank_profile from "../assets/blank_profile.png";
 import Skill from "./Skill";
-function Wilder({ name, skills }) {
+function Wilder({ name, skills = [] }) {
   return (
     <article className="card">
       <img src={blank_profile} alt="Jane Doe Profile" />
@@ -14,7 +14,7 @@ function Wilder({ name, skills }) {
       <h4>Wild Skills</h4>
       <ul className="skills">
         {skills.map((skill, index) => (
-          <Skill key={index} title={skill.title} votes={skill.votes} />
+          <Skill key={index} title={skill.name} votes={skill.votes} />
         ))}
       </ul>
     </article>
