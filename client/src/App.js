@@ -43,6 +43,7 @@ function App() {
             ? "loading..."
             : wilders.map((wilder) => (
                 <Wilder
+                  loadWildersIntoState={loadWildersIntoState}
                   key={wilder.id}
                   wilderId={wilder.id}
                   name={wilder.name}

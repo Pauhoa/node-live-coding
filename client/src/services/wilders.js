@@ -8,3 +8,7 @@ export async function getAllWilders() {
 export async function createWilder(wilderToCreate) {
   return API.post("/wilders", wilderToCreate);
 }
+
+export async function deleteWilder(wilderId) {
+  return API.delete(`wilders/${wilderId}`);
+}

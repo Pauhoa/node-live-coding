@@ -1,6 +1,20 @@
 import blank_profile from "../assets/blank_profile.png";
 import Skill from "./Skill";
-function Wilder({ name, wilderId, skills = [] }) {
+
+import { deleteWilder } from "../services/wilders";
+
+function Wilder({ name, wilderId, skills = [], loadWildersIntoState }) {
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    try {
+      await deleteWilder(wilderId);
+      loadWildersIntoState();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <article className="card">
       <img src={blank_profile} alt="Jane Doe Profile" />
@@ -17,6 +31,9 @@ function Wilder({ name, wilderId, skills = [] }) {
           <Skill key={index} title={skill.name} votes={skill.votes} />
         ))}
       </ul>
+      <button onClick={handleDelete} className="button">
+        supprimer
+      </button>
     </article>
   );
 }
