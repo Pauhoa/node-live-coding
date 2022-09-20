@@ -1,14 +1,15 @@
-const datasource = require('../db');
-const Skill = require('../entity/Skill');
-const Wilder = require('../entity/Wilder');
+import { IController } from "../types/IController";
+import datasource from "../db";
+import { Skill } from "../entity/Skill";
+import { Wilder } from "../entity/Wilder";
 
-module.exports = {
+const wildersController: IController = {
   create: async (req, res) => {
     const { name } = req.body;
     if (name.length > 100 || name.length === 0) {
       return res
         .status(422)
-        .send('the name should have a length between 1 and 100 characters');
+        .send("the name should have a length between 1 and 100 characters");
     }
 
     try {
@@ -16,21 +17,10 @@ module.exports = {
       res.status(201).send(created);
     } catch (err) {
       console.error(err);
-      res.send('error while creating wilder');
+      res.send("error while creating wilder");
     }
-
-    /*
-    datasource
-      .getRepository(Wilder)
-      .save({ name })
-      .then((created) => {
-        res.status(201).send(created);
-      })
-      .catch(() => {
-        res.send('error while creating wilder');
-      });
-      */
   },
+
   read: async (req, res) => {
     try {
       const wilders = await datasource.getRepository(Wilder).find();
@@ -39,7 +29,7 @@ module.exports = {
       res.send(wilders);
     } catch (err) {
       console.error(err);
-      res.send('error while reading wilders');
+      res.send("error while reading wilders");
     }
   },
   update: async (req, res) => {
@@ -47,18 +37,18 @@ module.exports = {
     if (name.length > 100 || name.length === 0) {
       return res
         .status(422)
-        .send('the name should have a length between 1 and 100 characters');
+        .send("the name should have a length between 1 and 100 characters");
     }
 
     try {
       const { affected } = await datasource
         .getRepository(Wilder)
         .update(req.params.id, req.body);
-      if (affected) return res.send('wilder updated');
+      if (affected !== null) return res.send("wilder updated");
       res.sendStatus(404);
     } catch (err) {
       console.error(err);
-      res.send('error while updating wilder');
+      res.send("error while updating wilder");
     }
   },
   delete: async (req, res) => {
@@ -66,7 +56,7 @@ module.exports = {
       const { affected } = await datasource
         .getRepository(Wilder)
         .delete(req.params.id);
-      if (affected) return res.send('wilder deleted');
+      if (affected !== null) return res.send("wilder deleted");
       res.sendStatus(404);
     } catch (err) {
       console.error(err);
@@ -75,28 +65,29 @@ module.exports = {
   addSkill: async (req, res) => {
     const wilderToUpdate = await datasource
       .getRepository(Wilder)
-      .findOneBy({ id: req.params.wilderId });
+      .findOneBy({ id: parseInt(req.params.wilderId) });
 
-    if (!wilderToUpdate) return res.status(404).send('wilder not found');
+    if (wilderToUpdate !== null)
+      return res.status(404).send("wilder not found");
 
     const skillToAdd = await datasource
       .getRepository(Skill)
       .findOneBy({ id: req.body.skillId });
 
-    if (!skillToAdd) return res.status(404).send('skill not found');
+    if (skillToAdd === null) return res.status(404).send("skill not found");
 
     wilderToUpdate.skills = [...wilderToUpdate.skills, skillToAdd];
 
     await datasource.getRepository(Wilder).save(wilderToUpdate);
 
-    res.send('skill added to wilder');
+    res.send("skill added to wilder");
   },
   removeSkill: async (req, res) => {
     const wilderToUpdate = await datasource
       .getRepository(Wilder)
       .findOneBy({ id: req.params.wilderId });
 
-    if (!wilderToUpdate) return res.status(404).send('wilder not found');
+    if (!wilderToUpdate) return res.status(404).send("wilder not found");
 
     const skillToDeleteId = parseInt(req.params.skillId, 10);
 
@@ -105,6 +96,8 @@ module.exports = {
     );
 
     await datasource.getRepository(Wilder).save(wilderToUpdate);
-    res.send('skill deleted from wilder');
+    res.send("skill deleted from wilder");
   },
 };
+
+export default wildersController;
