@@ -1,13 +1,22 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Grade from "./Grade";
 
 @Entity()
-export class Wilder {
+class Wilder {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
-  @Column()
-  city: string;
+  @Column({ nullable: true, length: 100, type: "varchar" })
+  city: string | null;
+
+  @Column({ length: 500, nullable: true, type: "text" })
+  bio: string | null;
+
+  @OneToMany(() => Grade, (grade) => grade.wilder)
+  grades: Grade[];
 }
+
+export default Wilder;

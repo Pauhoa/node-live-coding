@@ -1,6 +1,7 @@
 import { IController } from "../types/IController";
+
 import datasource from "../db";
-import { Skill } from "../entity/Skill";
+import Skill from "../entity/Skill";
 
 const skillsController: IController = {
   create: async (req, res) => {
@@ -47,7 +48,7 @@ const skillsController: IController = {
       const { affected } = await datasource
         .getRepository(Skill)
         .update(req.params.id, req.body);
-      if (affected !== null) return res.send("skill updated");
+      if (affected !== 0) return res.send("skill updated");
       res.sendStatus(404);
     } catch (err) {
       console.error(err);
@@ -59,7 +60,7 @@ const skillsController: IController = {
       const { affected } = await datasource
         .getRepository(Skill)
         .delete(req.params.id);
-      if (affected !== null) return res.send("skill deleted");
+      if (affected !== 0) return res.send("skill deleted");
       res.sendStatus(404);
     } catch (err) {
       console.error(err);
