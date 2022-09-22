@@ -1,4 +1,5 @@
 import { useState, FormEvent} from "react";
+import { useNavigate } from "react-router-dom";
 import { createWilder } from "../services/wilders";
 import { IwilderInput } from "../types/Iwilder";
 
@@ -11,6 +12,8 @@ export default function WilderForm({ loadWildersIntoState}: WilderFormProps) {
   const [name, setName] = useState<IwilderInput['name']>("");
   const [processing, setProcessing] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setProcessing(true);
@@ -21,6 +24,7 @@ export default function WilderForm({ loadWildersIntoState}: WilderFormProps) {
       console.error(err);
     } finally {
       setProcessing(false);
+      navigate('/wilders');
     }
   };
 

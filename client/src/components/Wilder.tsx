@@ -23,8 +23,6 @@ const Wilder = ({
     }
   };
 
-  
-
   return (
     <article className={styles.card}>
       <img src={blank_profile} alt={name} />

@@ -26,6 +26,7 @@ h3 {
 
 h1 {
   font-size: 40px;
+  text-decoration: none;
 }
 
 h2 {
@@ -63,9 +64,43 @@ footer {
 .card-row {
   display: grid;
   grid-template-columns: repeat(3, 32%);
-  justify-content: space-between;
+  gap: 16px;
 }
 
 button {
   cursor: pointer;
+}
+
+.link,
+.link:visited {
+  color: #f76c6c;
+  border: 1px #f76c6c solid;
+  border-radius: 4px;
+  padding: 8px;
+  margin-top: 20px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.header-link,
+.header-link:visited {
+  color: currentColor;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.header-link:hover {
+  text-decoration: underline;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
 }

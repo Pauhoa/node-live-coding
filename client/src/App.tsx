@@ -6,6 +6,9 @@ import Wilder from './components/Wilder';
 import WilderForm from './components/WilderForm';
 import { getAllWilders } from './services/wilders';
 import { Iwilder } from './types/Iwilder';
+import { Route, Routes } from 'react-router-dom';
+import WildersList from './components/WildersList';
+import Home from './components/Home';
 
 function App() {
   const [wilders, setWilders] = useState<Iwilder[]>([]);
@@ -30,19 +33,11 @@ function App() {
     <>
       <Header />
       <main className="container">
-        <WilderForm loadWildersIntoState={loadWildersIntoState} />
-        <h2>Wilders</h2>
-        <section className="card-row">
-          {loadingWilders
-            ? "Loading..."
-            : wilders.map((wilder) => (
-                <Wilder
-                  key={wilder.id}
-                  setWilders={setWilders}
-                  wilder={wilder}
-                />
-              ))}
-        </section>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/wilders" element={<WildersList />}/>
+          <Route path="/create-wilder" element={<WilderForm loadWildersIntoState={loadWildersIntoState}/>} />
+        </Routes>
       </main>
       <Footer />
     </>
