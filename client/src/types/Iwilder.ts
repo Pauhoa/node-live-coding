@@ -1,5 +1,3 @@
-import { NullLiteral } from "typescript";
-
 export interface SkillOfWilder {
   id: number;
   name: string;
