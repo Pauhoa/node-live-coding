@@ -1,21 +1,18 @@
-import "./App.css";
-
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Wilder from "./components/Wilder";
-import WilderForm from "./components/WilderForm";
-
-import { useEffect, useState } from "react";
-
-import { getAllWilders } from "./services/wilders";
+import { useEffect, useState } from 'react';
+import './index.css';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Wilder from './components/Wilder';
+import WilderForm from './components/WilderForm';
+import { getAllWilders } from './services/wilders';
+import { Iwilder } from './types/Iwilder';
 
 function App() {
-  const [wilders, setWilders] = useState([]);
+  const [wilders, setWilders] = useState<Iwilder[]>([]);
   const [loadingWilders, setLoadingWilders] = useState(false);
 
   const loadWildersIntoState = async () => {
     setLoadingWilders(true);
-
     try {
       setWilders(await getAllWilders());
     } catch (err) {
@@ -33,21 +30,16 @@ function App() {
     <>
       <Header />
       <main className="container">
-        <WilderForm
-          loadWildersIntoState={loadWildersIntoState}
-          setWilders={setWilders}
-        />
+        <WilderForm loadWildersIntoState={loadWildersIntoState} />
         <h2>Wilders</h2>
         <section className="card-row">
           {loadingWilders
-            ? "loading..."
+            ? "Loading..."
             : wilders.map((wilder) => (
                 <Wilder
-                  loadWildersIntoState={loadWildersIntoState}
                   key={wilder.id}
-                  wilderId={wilder.id}
-                  name={wilder.name}
-                  skills={wilder.skills}
+                  setWilders={setWilders}
+                  wilder={wilder}
                 />
               ))}
         </section>

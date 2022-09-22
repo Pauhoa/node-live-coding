@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useState, FormEvent} from "react";
 import { createWilder } from "../services/wilders";
-import styles from "./WilderForm.module.css";
+import { IwilderInput } from "../types/Iwilder";
 
-function WilderForm({ loadWildersIntoState, setWilders }) {
-  const [name, setName] = useState("");
+interface WilderFormProps {
+  loadWildersIntoState: () => void
+}
+
+
+export default function WilderForm({ loadWildersIntoState}: WilderFormProps) {
+  const [name, setName] = useState<IwilderInput['name']>("");
   const [processing, setProcessing] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setProcessing(true);
-
     try {
       await createWilder({ name });
       loadWildersIntoState();
@@ -23,7 +27,7 @@ function WilderForm({ loadWildersIntoState, setWilders }) {
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="name">
-        Nom : {""}
+        Nom :{" "}
         <input
           type="text"
           id="name"
@@ -35,8 +39,8 @@ function WilderForm({ loadWildersIntoState, setWilders }) {
       <button type="submit" disabled={processing}>
         Ajouter
       </button>
+      <br />
+      <br />
     </form>
   );
 }
-
-export default WilderForm;
