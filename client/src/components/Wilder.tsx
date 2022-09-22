@@ -34,7 +34,7 @@ const Wilder = ({
         ))}
       </ul>   
       <br />
-      <button onClick={handleDelete}>Delete</button>
+      <button className="button" onClick={handleDelete}><span>Delete </span></button>
     </article>
   );
 };
