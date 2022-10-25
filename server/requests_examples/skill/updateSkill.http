@@ -1,6 +1,0 @@
-PATCH http://localhost:5000/skills/14
-Content-Type: application/json
-
-{
-  "name": "Symfony"
-}

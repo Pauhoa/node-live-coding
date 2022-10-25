@@ -1,14 +1,16 @@
 import { DataSource } from "typeorm";
-import Grade from "./entity/Grade";
-import Skill from "./entity/Skill";
 import Wilder from "./entity/Wilder";
+import Skill from "./entity/Skill";
+import Grade from "./entity/Grade";
 
-const dataSource = new DataSource({
-  type: "sqlite",
-  database: "./wildersdb.sqlite",
+export default new DataSource({
+  type: "postgres",
+  host: "db",
+  port: 5432,
+  username: "postgres",
+  password: "postgres",
+  database: "postgres",
   synchronize: true,
   entities: [Wilder, Skill, Grade],
   logging: ["query", "error"],
 });
-
-export default dataSource;
